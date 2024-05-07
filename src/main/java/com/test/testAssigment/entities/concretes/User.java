@@ -10,6 +10,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.Pattern;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -26,9 +27,9 @@ public class User {
 	@Column(name = "user_id")
 	private int id;
 
-	@Email(message = "Email is not valid", regexp = "^[a-zA-Z0-9_!#$%&'*+/=?`{|}~^.-]+@[a-zA-Z0-9.-]+$")
 	@NotEmpty(message = "Email cannot be empty")
 	@Column(name = "email")
+	@Email(message = "Email is not valid")
 	private String email;
 
 	@Column(name = "first_name")
@@ -43,12 +44,12 @@ public class User {
 	@NotEmpty(message = "Birth date cannot be empty")
 	private LocalDate birthDate;
 	
-	private void setBirthDate(LocalDate birthDate) {
-		LocalDate currentDate = LocalDate.now();
-		if (birthDate.isAfter(currentDate)) {
-            throw new IllegalArgumentException("Earlier date must be before current date");
+	public void setBirthDate( LocalDate birthDate) {
+		if (birthDate.isAfter(LocalDate.now())) {
+            throw new IllegalArgumentException("Birth date cannot be in the future.");
         }
         this.birthDate = birthDate;
+        
 	}
 
 	@Column(name = "adress")

@@ -1,7 +1,9 @@
 package com.test.testAssigment.business.requests;
 
+import java.time.LocalDate;
 import java.util.Date;
 
+import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -13,6 +15,7 @@ import lombok.NoArgsConstructor;
 public class CreateUserRequest {
 
 	@NotNull
+	@Email(message = "Email is not valid")
 	private String email;
 	
 	@NotNull
@@ -22,7 +25,7 @@ public class CreateUserRequest {
 	private String lastName;
 	
 	@NotNull
-	private Date birthDate;
+	private LocalDate birthDate;
 	
 	private String adress;
 	
